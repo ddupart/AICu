@@ -6,11 +6,11 @@
 /*   By: ddupart <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/20 14:40:29 by ddupart           #+#    #+#             */
-/*   Updated: 2015/12/20 17:06:34 by ddupart          ###   ########.fr       */
+/*   Updated: 2015/12/21 22:49:54 by ddupart          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "alcu.h"
+#include "aicu.h"
 
 int		ft_save_line(char **board)
 {
@@ -19,8 +19,9 @@ int		ft_save_line(char **board)
 	i = 0;
 	while (board[i])
 		i++;
-	return (i);
+	return (i - 1);
 }
+
 int		ft_save_match(char *board)
 {
 	int	i;
@@ -47,6 +48,7 @@ void	ft_display_board(char **board)
 		ft_putendl(board[i]);
 		i++;
 	}
+	ft_putchar('\n');
 }
 
 int		ft_count_lines(char *buf)
@@ -65,20 +67,23 @@ int		ft_count_lines(char *buf)
 	return (count);
 }
 
-int		ft_count_lines_standard(char *buf)
+char	**ft_check_and_get(int argc, char **argv)
 {
-	int	i;
-	int	count;
+	char	**board;
 
-	i = 0;
-	count = 0;
-	while (buf[i])
+	if (argc > 2)
 	{
-		if (buf[i] == ' ')
-			count++;
-		i++;
+		ft_putendl_fd("ERROR", 2);
+		return (NULL);
 	}
-	if (buf[i - 1] == ' ')
-		count--;
-	return (count);
+	if (argc == 2)
+	{
+		board = ft_read(argv);
+		return (board);
+	}
+	else
+	{
+		board = ft_read_standard_input();
+		return (board);
+	}
 }
